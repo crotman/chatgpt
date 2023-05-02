@@ -15,13 +15,25 @@ knitr::opts_chunk$set(echo = TRUE)
 ```{r}
 
 library(openai)
+library(tidyverse)
+
+texto <- "Manifesto Ágil - Foi um documento elaborado em meados dos anos 2000, por uma série de profissionais que fizeram uma série de colocações e elaboraram princípios que hoje constituem o que nós entendemos como ser ágil e gerir um projeto de forma ágil;
+Projetos, Programas e Portfólios - Vamos entender para que, efetivamente, serve o Scrum. Para tanto vamos aprender por meio de conceitos o que é um projeto e como ele se aplica dentro de um Programa e Portfólio;
+Gestão de Pessoas e Liderança - Vamos aprender mais sobre os conceitos de Maslov e o modelo de Tuckman;
+Organização em Scrum - Vamos compreender também os valores que devem ser buscados quando montamos um Time de Trabalho em Scrum;"
+
+
+prompt <- "Mia couto tem mais de 50 anos e você incluiu na lista de 3 autores que eu pedi" %>% str_glue()
+
+
 
 resposta <- create_chat_completion(
    model = "gpt-3.5-turbo",
+   temperature = 0,
    messages = list(
        list(
            "role" = "system",
-           "content" = 'Complete: "Ó meu mengão, eu gosto de você...."'
+           "content" = prompt
        )
    )
 )
