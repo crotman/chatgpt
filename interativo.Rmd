@@ -1,0 +1,66 @@
+---
+title: "Untitled"
+author: "EPE"
+date: "2023-05-02"
+output: html_document
+runtime: shiny
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(openai)
+
+```
+
+
+```{r eruptions, echo=FALSE}
+
+
+inputPanel(
+    textAreaInput(
+        inputId = "prompt",
+        label = "Prompt"
+    ),
+    
+    actionButton(
+        inputId = "vai",
+        label = "Vai"
+    )
+)
+
+
+
+
+resposta <- eventReactive(eventExpr = input$vai, {
+    
+    
+    resposta <- create_chat_completion(
+       model = "gpt-3.5-turbo",
+       temperature = 0,
+       messages = list(
+           list(
+               "role" = "system",
+               "content" = input$prompt
+           )
+       )
+    )
+    
+    
+    resposta$choices$message.content
+    
+    
+    
+})
+
+
+renderText({
+
+    resposta()    
+    
+})
+
+
+
+
+```
