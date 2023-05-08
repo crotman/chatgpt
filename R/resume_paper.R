@@ -1,25 +1,39 @@
 
 resume_paper <- function(arquivo){
     
-    browser()
-    
+
     print(arquivo)
     
     Sys.sleep(0.5)
     
+    
+    resume_parte_possibily = possibly(
+        .f = resume_parte, 
+        otherwise = "This part could not be summarised", 
+        quiet = FALSE 
+    )
+    
+    
+    resume_parte_sem_guia_possibily = possibly(
+        .f = resume_parte_sem_guia, 
+        otherwise = "This part could not be summarised", 
+        quiet = FALSE 
+    )
+    
+    
     resumos <- extrai_partes_para_chat(arquivo) |> 
         mutate(
-            n_tokens = 1200/n() |>  as.integer()
+            n_tokens = 2000/n() |>  as.integer()
         ) |> 
         rowwise() |> 
         mutate(
-            resumo = resume_parte(
+            resumo = resume_parte_possibily(
                 texto,
                 n_tokens
             )
         ) |> 
         mutate(
-            resumo_sem_guia = resume_parte_sem_guia(
+            resumo_sem_guia = resume_parte_sem_guia_possibily(
                 texto,
                 n_tokens
             )

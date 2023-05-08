@@ -1,7 +1,16 @@
 
 extrai_partes_para_chat <- function(arquivo = "pdfs/18.pdf"){
 
-    texto <- tabulizer::extract_text(file = arquivo) 
+    
+    if(str_detect(arquivo, ".pdf$")){
+        texto <- tabulizer::extract_text(file = arquivo) 
+    }else{
+        texto <- read_lines(arquivo) %>% 
+            str_flatten(
+                collapse = "\n"
+            )
+    }
+        
     
     partes <- texto |> 
         enframe(
@@ -27,7 +36,7 @@ extrai_partes_para_chat <- function(arquivo = "pdfs/18.pdf"){
             tamanho_cum = cumsum(n_tokens)
         ) |> 
         mutate(
-            parte = tamanho_cum %/% 1200
+            parte = tamanho_cum %/% 2000
         ) |> 
         summarise(
             .by = parte,

@@ -6,8 +6,7 @@ resume_parte_sem_guia <- function(parte = teste$texto[4], n_tokens = 1000/6){
     
     print("resumindo")
     
-    browser()
-    
+
     resposta <- create_chat_completion(
         model = "gpt-3.5-turbo",
         temperature = 0,
@@ -32,6 +31,8 @@ resume_parte <- function(parte = teste$texto[4], n_tokens = 1000/6){
     
     print("resumindo")
 
+    print(parte)
+    
     resposta <- create_chat_completion(
         model = "gpt-3.5-turbo",
         temperature = 0,
