@@ -36,7 +36,7 @@ extrai_partes_para_chat <- function(arquivo = "pdfs/18.pdf"){
             tamanho_cum = cumsum(n_tokens)
         ) |> 
         mutate(
-            parte = tamanho_cum %/% 2000
+            parte = tamanho_cum %/% 8000
         ) |> 
         summarise(
             .by = parte,
